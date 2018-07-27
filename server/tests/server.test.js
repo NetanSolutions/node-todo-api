@@ -181,9 +181,4 @@ describe('PATCH /todos/:id', () => {
     })
     .end(done);
   });
-    //grab if of second item
-    //update text, set completed to false
-    //expect(200)
-    //text is changed, completed false, completedAt is null .toNotExist
-
 });
