@@ -29,7 +29,7 @@ var UserSchema = new mongoose.Schema({
       type: String,
       required: true
     }
-  }],
+  }]
 });
 
 UserSchema.methods.toJSON = function () {
@@ -42,7 +42,7 @@ UserSchema.methods.toJSON = function () {
 UserSchema.methods.generateAuthToken = function () {
   var user = this;
   var access = 'auth';
-  var token = jwt.sign({_id: user._id.toHexString(), access}, '123abc').toString();
+  var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString();
 
   user.tokens = user.tokens.concat([{access, token}]);
 

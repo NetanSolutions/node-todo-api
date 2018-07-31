@@ -91,7 +91,7 @@ app.patch('/todos/:id', (req, res) => {
     res.send({todo});
   }).catch((e) => {
     res.status(400).send();
-  });
+  })
 });
 
 app.post('/users', (req, res) => {
@@ -100,12 +100,12 @@ app.post('/users', (req, res) => {
 
   user.save().then(() => {
     return user.generateAuthToken();
-    // res.send(user);
+
   }).then((token) => {
     res.header('x-auth', token).send(user);
   }).catch((e) => {
     res.status(400).send(e);
-  });
+  })
 });
 
 app.get('/users/me', authenticate, (req, res) => {
