@@ -1,3 +1,10 @@
 node_modules/
 desktop.ini
 playground/desktop.ini
+server/config/desktop.ini
+server/db/desktop.ini
+server/middleware/.desktop.ini
+server/models/desktop.ini
+server/test/desktop.ini
+server/tests/seed/desktop.ini
+server/config/config.json
