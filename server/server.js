@@ -23,7 +23,7 @@ app.post('/todos', (req, res) => {
   todo.save().then((doc) => {
     res.send(doc);
   }, (e) => {
-    res.status(400).send(e);
+    res.sendStatus(400).send(e);
   });
 });
 
@@ -31,7 +31,7 @@ app.get('/todos', (req, res) => {
   Todo.find().then((todos) => {
     res.send({todos});
   }, (e) => {
-    res.status(400).send(e);
+    res.sendStatus(400).send(e);
   });
 });
 
@@ -39,16 +39,16 @@ app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
+    return res.sendStatus(404).send();
   }
 
   Todo.findById(id).then((todo) => {
     if (!todo) {
-      return res.status(404).send();
+      return res.sendStatus(404).send();
       }
       res.send({todo});
     }).catch((e) => {
-      res.status(400).send();
+      res.sendStatus(400).send();
     });
 });
 
@@ -56,16 +56,16 @@ app.delete('/todos/:id', (req, res) => {
   var id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
+    return res.sendStatus(404).send();
   }
 
   Todo.findByIdAndRemove(id).then((todo) => {
     if (!todo) {
-      return res.status(404).send();
+      return res.sendStatus(404).send();
       }
       res.send({todo});
     }).catch((e) => {
-      res.status(400).send();
+      res.sendStatus(400).send();
     });
 });
 
@@ -74,7 +74,7 @@ app.patch('/todos/:id', (req, res) => {
   var body = _.pick(req.body, ['text', 'completed']);
 
   if (!ObjectID.isValid(id)) {
-    return res.status(404).send();
+    return res.sendStatus(404).send();
   }
 
   if (_.isBoolean(body.completed) && body.completed) {
@@ -90,7 +90,7 @@ app.patch('/todos/:id', (req, res) => {
     }
     res.send({todo});
   }).catch((e) => {
-    res.status(400).send();
+    res.sendStatus(400).send();
   })
 });
 
@@ -104,7 +104,7 @@ app.post('/users', (req, res) => {
   }).then((token) => {
     res.header('x-auth', token).send(user);
   }).catch((e) => {
-    res.status(400).send(e);
+    res.sendStatus(400).send(e);
   })
 });
 
@@ -122,6 +122,14 @@ app.post('/users/login', (req, res) => {
   }).catch((e) => {
     res.sendStatus(400).send();
   });
+});
+
+app.delete('/users/me/token', authenticate, (req, res) => {
+  req.user.removeToken(req.token).then(() => {
+    res.sendStatus(200).send();
+  }, () => {
+    res.sendStatus(400).send();
+  })
 });
 
 app.listen(port, () => {
